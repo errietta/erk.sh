@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  url-shortener:
+    build: '.'
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      - mongodb
+    environment:
+      PORT: 3001
+      SESSION_SECRET: CHANGEME
+      MONGO_URL: "mongodb://mongodb/"
+      MONGO_DB: 'URLShortener'
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - "/home/erry/data:/data/db"
