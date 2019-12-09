@@ -9,6 +9,8 @@ const app = express()
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 3000
 
+app.use(express.static('static'))
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -19,9 +21,13 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', (_req, res) => res.send('Hello World!'))
-
 const startup = async (db, client) => {
+  app.use((_req, res, next) => {
+    res.set('x-robots-tag', 'noindex, nofollow, nosnippet')
+    return next()
+  })
+
+  app.get('/', (_req, res) => res.send('Hello World!'))
   app.use(routes(db))
   app.use("*", redirectRoutes(db))
 
