@@ -21,6 +21,12 @@ describe('Login', async () => {
     agent = chai.request.agent(server.app)
   })
 
+  after(async () => {
+    await agent.close()
+    await server.listener.close()
+    await db.close()
+  })
+
   beforeEach(async () => {
     await Promise.all([
       db.collection("users").deleteMany({}),
