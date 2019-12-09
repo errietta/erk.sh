@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 
-const { getDB } = require('../db')
 const routes = require('./routes')
 
 const app = express()
@@ -23,7 +22,7 @@ app.get('/', (_req, res) => res.send('Hello World!'))
 
 const startup = async (db, client) => {
   app.use(routes(db))
-  listener = app.listen(port, host, (u) => console.log(`app listening on port ${port}!`))
+  const listener = app.listen(port, host, () => console.log(`app listening on port ${port}!`))
 
   process.on('exit', function() {
     client.close()

@@ -1,10 +1,8 @@
-const bcrypt = require('bcrypt')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const MongoClient = require('mongo-mock').MongoClient
 
 const app = require('../server/app')
-
 
 const { expect } = chai
 chai.use(chaiHttp)

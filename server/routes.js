@@ -58,14 +58,12 @@ module.exports = db => {
         settings = {
           "currentId": 0
         }
-        await db.collection("settings").insertOne({
-          "currentId": 0
-        })
+        await db.collection("settings").insertOne(settings)
       }
 
       let currentId = settings.currentId + 1
+      let repeats = 0
 
-      repeats = 0
       while (await db.collection("urls").findOne({ slug: currentId.toString(36) })) {
         currentId++
         if (++repeats > 10) {
