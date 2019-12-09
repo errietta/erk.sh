@@ -27,7 +27,13 @@
     "eslint": "^6.7.2",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "mongo-mock": "^3.8.1",
     "mongodb": "^3.3.5",
     "node-getopt": "^0.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2"
   }
 }

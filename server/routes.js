@@ -22,13 +22,13 @@ module.exports = db => {
       });
     }
 
-    if (!bcrypt.compare(password, user.password)) {
+    if (!await bcrypt.compare(password, user.password)) {
       return res.status(422).json({
         'error': 'username or password incorrect'
       });
     }
 
-    req.session.user = user
+    req.session.user = user._id
 
     return res.json({
       success: true,
@@ -37,7 +37,7 @@ module.exports = db => {
   });
 
   router.post('/add', async (req, res) => {
-    if (!req.session) {
+    if (!req.session.user) {
       return res.status(422).json({
         'error': 'not logged in'
       });
@@ -50,12 +50,11 @@ module.exports = db => {
         'error': 'url must be given'
       });
     }
-    console.log("mooo")
 
     if (!slug) {
-      const settings = await db.collection("settings").findOne({})
+      let settings = await db.collection("settings").findOne({})
 
-      if (!settings) {
+      if (!settings || !settings.currentId || isNaN(settings.currentId)) {
         settings = {
           "currentId": 0
         }
@@ -64,19 +63,24 @@ module.exports = db => {
         })
       }
 
-      let currentId = settings.curentId + 1
+      let currentId = settings.currentId + 1
 
       repeats = 0
       while (await db.collection("urls").findOne({ slug: currentId.toString(36) })) {
         currentId++
         if (++repeats > 10) {
-          cosole.error("couldnt get next id :/")
-          return res.status(500)
+          console.error("couldnt get next id :/")
+          return res.status(500).json({ 'error': 'error' })
         }
       }
 
       slug = currentId.toString(36)
       db.collection("settings").update({}, { currentId })
+    } else {
+      const url = await db.collection("urls").findOne({ slug, })
+      if (url) {
+        return res.status(422).json({ 'error': 'slug already exists' })
+      }
     }
 
     await db.collection("urls").insert({

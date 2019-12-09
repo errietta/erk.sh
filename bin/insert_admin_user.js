@@ -28,7 +28,7 @@ const doInsert = async db => {
 }
 
 (async () => {
-  const db = await getDB()
-  await doInsert(db.db)
-  db.client.close()
+  const { db, client } = await getDB()
+  await doInsert(db)
+  client.close()
 })()
