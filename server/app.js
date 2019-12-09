@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 
 const routes = require('./routes')
+const redirectRoutes = require('./routes/redirect')
 
 const app = express()
 const host = process.env.HOST || '0.0.0.0'
@@ -22,6 +23,8 @@ app.get('/', (_req, res) => res.send('Hello World!'))
 
 const startup = async (db, client) => {
   app.use(routes(db))
+  app.use("*", redirectRoutes(db))
+
   const listener = app.listen(port, host, () => console.log(`app listening on port ${port}!`))
 
   process.on('exit', function() {
