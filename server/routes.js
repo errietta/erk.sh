@@ -5,13 +5,13 @@ module.exports = db => {
   const router = express.Router()
 
   router.post('/login', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.body.username
+    const password = req.body.password
 
     if (!username || !password) {
       return res.status(422).json({
         'error': 'username and password must be given'
-      });
+      })
     }
 
     const user = await db.collection("users").findOne({username})
@@ -19,13 +19,13 @@ module.exports = db => {
     if (!user) {
       return res.status(422).json({
         'error': 'username or password incorrect'
-      });
+      })
     }
 
     if (!await bcrypt.compare(password, user.password)) {
       return res.status(422).json({
         'error': 'username or password incorrect'
-      });
+      })
     }
 
     req.session.user = user._id
@@ -34,21 +34,21 @@ module.exports = db => {
       success: true,
       userid: user._id,
     })
-  });
+  })
 
   router.post('/add', async (req, res) => {
     if (!req.session.user) {
       return res.status(422).json({
         'error': 'not logged in'
-      });
+      })
     }
-    const url = req.body.url;
-    let slug = req.body.slug;
+    const url = req.body.url
+    let slug = req.body.slug
 
     if (!url) {
       return res.status(422).json({
         'error': 'url must be given'
-      });
+      })
     }
 
     if (!slug) {
@@ -92,7 +92,7 @@ module.exports = db => {
       success: true,
       slug
     })
-  });
+  })
 
-  return router;
+  return router
 }
