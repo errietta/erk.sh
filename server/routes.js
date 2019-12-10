@@ -1,5 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
+const validUrl = require('valid-url')
 
 module.exports = db => {
   const router = express.Router()
@@ -79,6 +80,10 @@ module.exports = db => {
       if (url) {
         return res.status(422).json({ 'error': 'slug already exists' })
       }
+    }
+
+    if (!validUrl.isUri(url)){
+      return res.status(422).json({ 'error': 'not a valid url' })
     }
 
     await db.collection("urls").insert({

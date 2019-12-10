@@ -78,4 +78,13 @@ describe('Add URL', async () => {
     })
     expect(result.body).to.have.property('error').equal('slug already exists')
   })
+
+  it('should return error if url invalid', async () => {
+    let result = await agent.post("/add").send({
+      "url": "nope",
+      "slug": "erry",
+    })
+
+    expect(result.body).to.have.property('error').equal('not a valid url')
+  })
 })
