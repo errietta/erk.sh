@@ -18,12 +18,15 @@ module.exports = db => {
     const user = await db.collection("users").findOne({username})
 
     if (!user) {
+      console.log("1")
       return res.status(422).json({
         'error': 'username or password incorrect'
       })
     }
 
     if (!await bcrypt.compare(password, user.password)) {
+      console.log(password, user.password)
+      console.log("22")
       return res.status(422).json({
         'error': 'username or password incorrect'
       })

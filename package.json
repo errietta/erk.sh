@@ -30,6 +30,7 @@
     "mongo-mock": "^3.8.1",
     "mongodb": "^3.3.5",
     "node-getopt": "^0.3.2",
+    "sanitize-html": "^1.20.1",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@ services:
   url-shortener:
     build: '.'
     ports:
-      - "127.0.0.1:3001:3001"
+      - "3001:3001"
     depends_on:
       - mongodb
     environment:
@@ -15,4 +15,6 @@ services:
   mongodb:
     image: mongo:latest
     volumes:
-      - "/home/erry/data:/data/db"
+      - "/home/erry/data2:/data/db"
+    ports:
+      - "127.0.0.1:27017:27017"
