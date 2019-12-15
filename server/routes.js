@@ -1,5 +1,5 @@
-const express = require('express')
 const bcrypt = require('bcrypt')
+const express = require('express')
 const validUrl = require('valid-url')
 
 module.exports = db => {
@@ -18,15 +18,12 @@ module.exports = db => {
     const user = await db.collection("users").findOne({username})
 
     if (!user) {
-      console.log("1")
       return res.status(422).json({
         'error': 'username or password incorrect'
       })
     }
 
     if (!await bcrypt.compare(password, user.password)) {
-      console.log(password, user.password)
-      console.log("22")
       return res.status(422).json({
         'error': 'username or password incorrect'
       })
@@ -46,6 +43,7 @@ module.exports = db => {
         'error': 'not logged in'
       })
     }
+
     const url = req.body.url
     let slug = req.body.slug
 
@@ -97,6 +95,21 @@ module.exports = db => {
     return res.json({
       success: true,
       slug
+    })
+  })
+
+  router.get('/list', async (req, res) => {
+    if (!req.session.user) {
+      return res.status(422).json({
+        'error': 'not logged in'
+      })
+    }
+
+    const urls = await db.collection("urls").find({}).toArray()
+
+    return res.json({
+      success: true,
+      items: urls.map(url => ({ url: url.url, slug: url.slug }))
     })
   })
 

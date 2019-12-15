@@ -1,5 +1,4 @@
 const express = require('express')
-const bcrypt = require('bcrypt')
 
 module.exports = db => {
   const router = express.Router()

@@ -4,9 +4,9 @@
   "description": "URL shortener",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit"
   },
-  "author": "Errietta Kostala",
+  "author": "Errietta 'Erry' Kostala",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "babel-eslint": "^10.0.3",
     "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
+    "connect-memcached": "^1.0.0",
     "eslint": "^6.7.2",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
