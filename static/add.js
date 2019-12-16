@@ -17,7 +17,7 @@ const add = async () => {
     document.getElementById('error').innerText = ''
     document.getElementById('success').innerHTML = `
     <div>
-    success, slug=${result.slug} <a href="https://erk.im/${result.slug}">https://erk.im/${result.slug}</a>
+    success, slug=${result.slug} <a href="https://SITE_URL/${result.slug}">https://SITE_URL/${result.slug}</a>
     </div>`
   }
 }
