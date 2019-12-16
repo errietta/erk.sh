@@ -14,7 +14,7 @@ const list = async () => {
     items.forEach((item) => {
       html += `
       <li>
-        <a href="${item.url}">url=${item.url}</a> slug=${result.slug} <a href="https://erk.im/${result.slug}">https://erk.im/${result.slug}</a>
+        <a href="${item.url}">url=${item.url}</a> slug=${item.slug} <a href="https://erk.im/${item.slug}">https://erk.im/${item.slug}</a>
       </li>`
     })
     html += "</ul>"
